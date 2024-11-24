@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-Up Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Function to validate the password
+        function validateForm(event) {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm_password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                event.preventDefault(); // Prevent form submission
+                errorMessage.textContent = "Passwords do not match!";
+                return false;
+            }
+
+            // If passwords match, allow form submission
+            errorMessage.textContent = ""; // Clear error message
+            return true;
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-screen-lg flex">
+            <div class="w-1/2 pr-8">
+                <h1 class="text-3xl font-bold mb-2">Easy Highway Ticketing</h1>
+                <p class="text-gray-600 mb-6">Sign up into Admin account</p>
+
+                <form action="signup.php" method="POST" onsubmit="return validateForm(event)"> <!-- This points to signup.php -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700">First Name :</label>
+                            <input name="first_name" class="w-full mt-1 p-2 border rounded-md bg-gray-100" placeholder="Enter your First name.." type="text" required/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700">Last Name :</label>
+                            <input name="last_name" class="w-full mt-1 p-2 border rounded-md bg-gray-100" placeholder="Enter your Last name.." type="text" required/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700">Email Id :</label>
+                            <input id="email" name="email" class="w-full mt-1 p-2 border rounded-md bg-gray-100" placeholder="info@xyz.com" type="email" required/>
+                            <p id="email-error" class="text-red-500 mt-1">
+                                <?php if (isset($_GET['email_error'])) echo htmlspecialchars($_GET['email_error']); ?>
+                            </p> <!-- Error message for existing email -->
+                        </div>
+                        <div>
+                            <label class="block text-gray-700">Mobile No. :</label>
+                            <input name="mobile_no" class="w-full mt-1 p-2 border rounded-md bg-gray-100" placeholder="+94 71-4862389" type="text" required/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700">Password :</label>
+                            <input id="password" name="password" class="w-full mt-1 p-2 border rounded-md bg-gray-100" placeholder="xxxxxxxxxx" type="password" required/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700">Confirm Password :</label>
+                            <input id="confirm_password" name="confirm_password" class="w-full mt-1 p-2 border rounded-md bg-gray-100" placeholder="xxxxxxxxxx" type="password" required/>
+                            <p id="error-message" class="text-red-500 mt-1"></p> <!-- Error message for password mismatch -->
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-gray-700">Entrance Location:</label>
+                        <select name="entrance_location" class="w-full mt-1 p-2 border rounded-md bg-gray-100" required>
+                            <option value="" disabled selected>Enter Entrance Location</option>
+                            <option>Kadawatha</option>
+                            <option>Katunayaka </option>
+                            <option>Kottawa</option>
+                            <option>Kurunegala</option>
+                            <option>Matara</option>
+                        </select>
+                    </div>
+                    <div class="flex mt-6">
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700" type="submit">Sign up</button>
+                        <button class="ml-4 bg-white text-gray-700 border border-gray-300 px-4 py-2 rounded-md shadow-md hover:bg-gray-100" type="reset">Clear</button>
+                    </div>
+                </form>
+            </div>
+            <div class="w-1/2">
+                <img alt="Highway sign with directions to Kottawa and Matara" class="rounded-lg shadow-md" height="800" src="https://storage.googleapis.com/a1aa/image/bKd2KPyezi37Py2dNBnzLaJOoyjTI899nl1CAjGfGe8UVgNnA.jpg" width="600"/>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
