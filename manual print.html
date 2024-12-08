@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Highway Ticketing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .error {
+            color: red; /* Style for error messages */
+            font-size: 0.875rem; /* Slightly smaller font size for errors */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+  
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="relative">
+                <input class="px-4 py-2 rounded-full text-black" placeholder="Search for anything" type="text"/>
+                <i class="fas fa-search absolute right-3 top-3 text-gray-500"></i>
+            </div>
+        </div>
+    </nav>
+    <!-- Header -->
+    <header class="bg-gradient-to-b from-blue-200 to-white text-center py-8">
+        <h1 class="text-2xl font-bold">Print New Ticket To The System</h1>
+    </header>
+    <!-- Main Content -->
+    <main class="container mx-auto p-8 flex space-x-8">
+        <!-- Form Section -->
+        <div class="w-full bg-white p-8 shadow-md rounded-md">
+            <form action="create_ticket.php" method="POST">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700" for="ticket-id">Ticket ID</label>
+                        <input class="w-full p-2 border border-gray-300 rounded" id="ticket-id" name="ticket-id" type="text" readonly/>
+                        <?php if (isset($errors['ticket-id'])): ?>
+                            <div class="error"><?php echo $errors['ticket-id']; ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700" for="date">Date</label>
+                        <input class="w-full p-2 border border-gray-300 rounded" id="date" name="date" type="date" readonly/>
+                        <?php if (isset($errors['date'])): ?>
+                            <div class="error"><?php echo $errors['date']; ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700" for="vehicle-id">Vehicle ID</label>
+                        <input class="w-full p-2 border border-gray-300 rounded" id="vehicle-id" name="vehicle-id" type="text"/>
+                        <?php if (isset($errors['vehicle-id'])): ?>
+                            <div class="error"><?php echo $errors['vehicle-id']; ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700" for="vehicle-plate-no">Vehicle Plate No</label>
+                        <input class="w-full p-2 border border-gray-300 rounded" id="vehicle-plate-no" name="vehicle-plate-no" type="text"/>
+                        <?php if (isset($errors['vehicle-plate-no'])): ?>
+                            <div class="error"><?php echo $errors['vehicle-plate-no']; ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700" for="time">Time</label>
+                        <input class="w-full p-2 border border-gray-300 rounded" id="time" name="time" type="text" readonly/>
+                        <?php if (isset($errors['time'])): ?>
+                            <div class="error"><?php echo $errors['time']; ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700" for="location">Entrance</label>
+                        <select class="w-full p-2 border border-gray-300 rounded" id="location" name="location">
+                            <option>Kadawatha</option>
+                            <option>Katunayaka</option>
+                            <option>Kottawa</option>
+                            <option>Kurunegala</option>
+                            <option>Matara</option>
+                        </select>
+                        <?php if (isset($errors['location'])): ?>
+                            <div class="error"><?php echo $errors['location']; ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-gray-700" for="category">Category</label>
+                        <select class="w-1/2 p-2 border border-gray-300 rounded" id="category" name="category">
+                            <option>Select Category</option>
+                            <option>Dual Purpose Motor Vehicle</option>
+                            <option>Motor Lorry</option>
+                            <option>Motor Coach</option>
+                        </select>
+                        <?php if (isset($errors['category'])): ?>
+                            <div class="error"><?php echo $errors['category']; ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-span-2 flex justify-between mt-4">
+                        <button type="button" class="bg-gray-600 text-white px-4 py-2 rounded-full hover:bg-blue-700" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700">Issue Ticket</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-white text-center py-4 mt-8 border-t border-gray-300">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-lg font-bold">Easy Highway Ticketing</div>
+            <div class="flex space-x-4">
+                <a class="hover:underline" href="#">Contact</a>
+                <a class="hover:underline" href="#">Terms of Use</a>
+                <a class="hover:underline" href="#">Privacy Policy</a>
+                <a class="hover:underline" href="#">FAQ</a>
+            </div>
+            <div class="flex space-x-4">
+                <a class="text-gray-600" href="#"><i class="fab fa-facebook"></i></a>
+                <a class="text-gray-600" href="#"><i class="fab fa-instagram"></i></a>
+                <a class="text-gray-600" href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Set the current time
+            const timeInput = document.getElementById('time');
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedTime = `${hours % 12 || 12}:${minutes < 10 ? '0' : ''}${minutes} ${ampm}`;
+            timeInput.value = formattedTime;
+
+            // Set the current date
+            const dateInput = document.getElementById('date');
+            const formattedDate = now.toISOString().split('T')[0];
+            dateInput.value = formattedDate;
+
+            // Generate the ticket ID
+            const ticketIdInput = document.getElementById('ticket-id');
+            const date = now.toISOString().split('T')[0].replace(/-/g, '');
+            const time = `${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
+            const ticketId = `HWY-${date}-${time}`;
+            ticketIdInput.value = ticketId;
+
+            // Update the date in real-time
+            setInterval(() => {
+                const now = new Date();
+                const formattedDate = now.toISOString().split('T')[0];
+                dateInput.value = formattedDate;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
