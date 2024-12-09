@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Main Dashboard</title>
+</head>
+<body class="font-roboto bg-gray-100 flex">
+
+    <!-- Sidebar -->
+    <aside class="bg-gray-800 text-white w-64 min-h-screen p-6 relative">
+        <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
+        <nav class="space-y-2">
+            <a class="block py-2 px-3 hover:bg-gray-700 hover:border hover:border-orange-500 rounded transition duration-300" href="#">Home</a>
+            <a class="block py-2 px-3 hover:bg-gray-700 hover:border hover:border-orange-500 rounded transition duration-300" href="http://localhost/Number%20Plate%20System/profile.html">Profile</a>
+            <a class="block py-2 px-3 hover:bg-gray-700 hover:border hover:border-orange-500 rounded transition duration-300" href="#">Settings</a>
+            <a class="block py-2 px-3 hover:bg-gray-700 hover:border hover:border-orange-500 rounded transition duration-300" href="#">Support</a>
+        </nav>
+    </aside>
+
+    <div class="flex-1 p-6">
+        <header class="bg-orange-500 text-white w-full flex justify-between items-center p-4 rounded">
+            <div>
+                <span class="text-lg font-bold">Welcome, <?php echo htmlspecialchars($_SESSION['name']); ?></span>
+            </div>
+            <div>
+                <span id="datetime" class="text-lg"></span>
+            </div>
+            <a href="dashboard.php?logout=true" class="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800">Logout</a>
+        </header>
+
+        <!-- Dashboard Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+            <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl hover:border hover:border-teal-500 transition duration-300">
+                <h3 class="text-xl font-semibold mb-2">Total Tickets Issued</h3>
+                <p class="text-2xl font-bold">150</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl hover:border hover:border-teal-500 transition duration-300">
+                <h3 class="text-xl font-semibold mb-2">Pending Requests</h3>
+                <p class="text-2xl font-bold">5</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl hover:border hover:border-teal-500 transition duration-300">
+                <h3 class="text-xl font-semibold mb-2">Feedback Received</h3>
+                <p class="text-2xl font-bold">10</p>
+            </div>
+        </div>
+
+        <!-- Ticket Issuance Options -->
+        <div class="bg-white p-8 rounded-lg shadow-lg mt-12 hover:shadow-xl hover:border hover:border-orange-500 transition duration-300">
+            <h1 class="text-2xl font-bold mb-6 text-center">Ticket Issuance Options</h1>
+            <div class="flex flex-col items-center justify-center h-3/4 space-y-4">
+                <a href="http://localhost/Number%20Plate%20System/manual%20print.html" class="bg-orange-500 text-white px-6 py-3 rounded-full text-center hover:bg-orange-600">Manual Platform</a>
+                <button id="automatedPlatformBtn" class="bg-teal-500 text-white px-6 py-3 rounded-full hover:bg-teal-600">Automated Platform</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('automatedPlatformBtn').addEventListener('click', function() {
+            // Redirect to the new automated platform page immediately
+            window.location.href = 'http://localhost/Number%20Plate%20System/automated_platform.html';
+
+            // Call the backend to run the Python script in the background
+            fetch('http://localhost:5000/run-script', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status !== 'success') {
+                    console.error('Error executing script:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        function updateDateTime() {
+            const now = new Date();
+            const formattedDate = now.toLocaleString('en-US', {
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit'
+            });
+            document.getElementById('datetime').textContent = formattedDate;
+        }
+        setInterval(updateDateTime, 1000); // Update every second
+    </script>
+
+</body>
+</html>
